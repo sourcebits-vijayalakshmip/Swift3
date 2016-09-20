@@ -32,8 +32,19 @@ class ViewController: UIViewController {
         let urlPath = "https://omgvamp-hearthstone-v1.p.mashape.com/cards"
         Alamofire.request(urlPath, method: .get, parameters: nil, headers: ["X-Mashape-Key": "xd90O4gfMdmshyLxk5cBvl44PPHlp1ONA3kjsnFFOAtbQnoshp", "Content-type application":"json"]).responseJSON() { response in
             
-            //print(response)
-        }
+            print(response)
+            if let JSON = response.result.value {
+                self.jsonDict = (JSON as? NSDictionary)!
+                let jsonBasic = self.jsonDict["Basic"]
+                print("Basic..", jsonBasic)
+                
+                if let blogs = self.jsonDict["Basic"] as? [[String: AnyObject]] {
+                    for blog in blogs {
+                        if let text = blog["text"] as? String {
+                            print("text...",text)
+                        }
+                    }
+         }
         
         // The URL request sent to the server.
         let urlPathForcardback = "https://omgvamp-hearthstone-v1.p.mashape.com/cardbacks"
@@ -49,16 +60,15 @@ class ViewController: UIViewController {
                 print("cardBackId....", its["cardBackId"] as? String)
                 print("name....", its["name"] as? String)
             }
-            
         }
         
         // The URL request sent to the server.
         let urlPathForInfo = "https://omgvamp-hearthstone-v1.p.mashape.com/info"
         Alamofire.request(urlPathForInfo, method: .get, parameters: nil, headers: ["X-Mashape-Key": "xd90O4gfMdmshyLxk5cBvl44PPHlp1ONA3kjsnFFOAtbQnoshp", "Content-type application":"json"]).responseJSON() { response in
             
-            print(response)
+            //print(response)
             
-            //to get status code
+           //to get status code
             if let status = response.response?.statusCode {
                 switch(status){
                 case 201:
@@ -79,10 +89,10 @@ class ViewController: UIViewController {
                 print("races..",self.jsonDict["races"])
                 print("locales..",self.jsonDict["locales"])
             }
+            
+            }
         }
     }
-
-
-
+    }
 }
 

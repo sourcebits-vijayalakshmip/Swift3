@@ -3,6 +3,7 @@
 
 target 'Swift3' do
 pod 'Alamofire', '~> 4.0’
+pod 'Freddy', '~>3.0’
   # Comment this line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
 
