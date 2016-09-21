@@ -13,7 +13,7 @@ class Items: NSObject {
     var name: String = ""
     var cardBackId: String = ""
     var classesNames: [NSDictionary] = []
-    var text:String = ""
+    var textString: String? = nil
     
     
 }

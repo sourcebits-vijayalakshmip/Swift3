@@ -19,6 +19,9 @@
 		FD5990001D901F53005E6072 /* Swift3Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD598FFF1D901F53005E6072 /* Swift3Tests.swift */; };
 		FD59900B1D901F53005E6072 /* Swift3UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD59900A1D901F53005E6072 /* Swift3UITests.swift */; };
 		FD59901C1D902310005E6072 /* Items.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD59901B1D902310005E6072 /* Items.swift */; };
+		FD7981D01D9255E3006E97FB /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7981CF1D9255E3006E97FB /* CoreDataStack.swift */; };
+		FD7981DD1D925A90006E97FB /* AllCards+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7981DB1D925A90006E97FB /* AllCards+CoreDataClass.swift */; };
+		FD7981DE1D925A90006E97FB /* AllCards+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7981DC1D925A90006E97FB /* AllCards+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +66,9 @@
 		FD59900A1D901F53005E6072 /* Swift3UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swift3UITests.swift; sourceTree = "<group>"; };
 		FD59900C1D901F53005E6072 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD59901B1D902310005E6072 /* Items.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Items.swift; sourceTree = "<group>"; };
+		FD7981CF1D9255E3006E97FB /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		FD7981DB1D925A90006E97FB /* AllCards+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AllCards+CoreDataClass.swift"; sourceTree = "<group>"; };
+		FD7981DC1D925A90006E97FB /* AllCards+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AllCards+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +125,7 @@
 		FD598FDB1D901F52005E6072 = {
 			isa = PBXGroup;
 			children = (
+				FD7981D11D92570F006E97FB /* CoreData Model */,
 				FD5990181D9022EC005E6072 /* Model */,
 				FD598FE61D901F52005E6072 /* Swift3 */,
 				FD598FFE1D901F53005E6072 /* Swift3Tests */,
@@ -177,6 +184,16 @@
 				FD59901B1D902310005E6072 /* Items.swift */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		FD7981D11D92570F006E97FB /* CoreData Model */ = {
+			isa = PBXGroup;
+			children = (
+				FD7981DB1D925A90006E97FB /* AllCards+CoreDataClass.swift */,
+				FD7981DC1D925A90006E97FB /* AllCards+CoreDataProperties.swift */,
+				FD7981CF1D9255E3006E97FB /* CoreDataStack.swift */,
+			);
+			name = "CoreData Model";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -447,10 +464,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD7981D01D9255E3006E97FB /* CoreDataStack.swift in Sources */,
 				FD59901C1D902310005E6072 /* Items.swift in Sources */,
 				FD598FEA1D901F52005E6072 /* ViewController.swift in Sources */,
+				FD7981DE1D925A90006E97FB /* AllCards+CoreDataProperties.swift in Sources */,
 				FD598FF01D901F52005E6072 /* Swift3.xcdatamodeld in Sources */,
 				FD598FE81D901F52005E6072 /* AppDelegate.swift in Sources */,
+				FD7981DD1D925A90006E97FB /* AllCards+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
