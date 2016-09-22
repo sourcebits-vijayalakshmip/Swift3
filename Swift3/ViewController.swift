@@ -10,14 +10,12 @@ import UIKit
 import CoreData
 
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ViewController: UIViewController {
     
     var jsonDict: NSDictionary = [:]
     var jsonArray: NSArray = []
     let namesData : NSDictionary = [:]
     var namesArray: NSMutableArray = []
-    
-    @IBOutlet var table: UITableView!
     
     lazy var coreDataStack = CoreDataStack()
     var itemsObj = Items()
@@ -30,21 +28,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    // Mark - UITableview DataSource Methods
-    
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        print("array.. ", self.namesArray.count)
-        return self.namesArray.count
-    }
-    
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        cell.textLabel?.text = self.namesArray[indexPath.row] as? String
-        return cell
     }
     
     func callAPIForCards() -> Void {
@@ -67,10 +50,18 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                         // save data from server in coredata
                         let allcardsNames = AllCards(context: self.coreDataStack.persistentContainer.viewContext)
                         allcardsNames.name = self.itemsObj.name
-                        print("namesArray..",allcardsNames.name)
                         self.namesArray.add(allcardsNames)
-                        for elements in self.namesArray {
-                            print("elements are..", elements)
+                        do {
+                            try self.coreDataStack.saveContext()
+                            self.namesArray.add(allcardsNames.name)
+                            for elements in self.namesArray {
+                                print("elements are..", elements)
+                            }
+                            print("data is saved successfully")
+                            // Fetch data
+                            self.featchNames()
+                        } catch let error as NSError  {
+                            print("Could not save \(error), \(error.userInfo)")
                         }
                     }
                 }
@@ -122,6 +113,19 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 }
             }
         }
+    }
+    
+    // Mark - Fetch All cards
+    func featchNames() {
+        let moc = coreDataStack.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName:"AllCards")
+        do {
+            let fetchedAllcards = try moc.fetch(fetchRequest) as? [AllCards]
+            print("fetch data", fetchedAllcards)
+        } catch {
+            fatalError("Failed to fetched Allcards: \(error)")
+        }
+        
     }
 }
 
