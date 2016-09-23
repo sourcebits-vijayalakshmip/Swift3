@@ -7,7 +7,6 @@
 //
 
 import Foundation
-
 import CoreData
 class CoreDataStack {
     
@@ -53,4 +52,13 @@ class CoreDataStack {
             }
         }
     }
+    
+//    func insertValuesToAllcards(its: Items)  {
+//        
+//        let allcardsNames = AllCards(context: self.persistentContainer.viewContext)
+//        allcardsNames.name = its.name
+//        print("CardNames..", allcardsNames.name)
+//        
+//    }
+
 }

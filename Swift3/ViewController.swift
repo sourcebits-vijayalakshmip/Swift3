@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     var jsonDict: NSDictionary = [:]
     var jsonArray: NSArray = []
     let namesData : NSDictionary = [:]
-    var namesArray: NSMutableArray = []
+    var fetchedCards: NSMutableArray = []
     
     lazy var coreDataStack = CoreDataStack()
     var itemsObj = Items()
@@ -24,19 +24,25 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.callAPIForCards()
+        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        
+        self.saveDatainDatabase()
+        self.fetch()
+    }
     func callAPIForCards() -> Void {
         
         // The URL request sent to the server.
         let urlPath = "https://omgvamp-hearthstone-v1.p.mashape.com/cards"
         Alamofire.request(urlPath, method: .get, parameters: nil, headers: ["X-Mashape-Key": "xd90O4gfMdmshyLxk5cBvl44PPHlp1ONA3kjsnFFOAtbQnoshp", "Content-type application":"json"]).responseJSON() { response in
             
-            print(response)
+            //print(response)
             if let JSON = response.result.value {
                 self.jsonDict = (JSON as? NSDictionary)!
                 let jsonBasic = self.jsonDict["Basic"]
@@ -47,26 +53,11 @@ class ViewController: UIViewController {
                         if let name = blog["name"] as? String {
                             self.itemsObj.name = name
                         }
-                        // save data from server in coredata
-                        let allcardsNames = AllCards(context: self.coreDataStack.persistentContainer.viewContext)
-                        allcardsNames.name = self.itemsObj.name
-                        self.namesArray.add(allcardsNames)
-                        do {
-                            try self.coreDataStack.saveContext()
-                            self.namesArray.add(allcardsNames.name)
-                            for elements in self.namesArray {
-                                print("elements are..", elements)
-                            }
-                            print("data is saved successfully")
-                            // Fetch data
-                            self.featchNames()
-                        } catch let error as NSError  {
-                            print("Could not save \(error), \(error.userInfo)")
-                        }
+                        
                     }
                 }
                 
-                // The URL request sent to the server.
+           /*   // The URL request sent to the server.
                 let urlPathForcardback = "https://omgvamp-hearthstone-v1.p.mashape.com/cardbacks"
                 Alamofire.request(urlPathForcardback, method: .get, parameters: nil, headers: ["X-Mashape-Key": "xd90O4gfMdmshyLxk5cBvl44PPHlp1ONA3kjsnFFOAtbQnoshp", "Content-type application":"json"]).responseJSON() { response in
                     
@@ -110,22 +101,45 @@ class ViewController: UIViewController {
                         print("locales..",self.jsonDict["locales"])
                     }
                     
-                }
+                } */
             }
         }
     }
     
-    // Mark - Fetch All cards
-    func featchNames() {
-        let moc = coreDataStack.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName:"AllCards")
+    // Mark - save in database
+    
+    func saveDatainDatabase() {
+        
+        let moc = self.coreDataStack.persistentContainer.viewContext
+        let allcardsNames = AllCards(context: moc)
+        allcardsNames.setValue(self.itemsObj.name, forKey: "name")
         do {
-            let fetchedAllcards = try moc.fetch(fetchRequest) as? [AllCards]
-            print("fetch data", fetchedAllcards)
+            try moc.save()
+            print("saved Successfully")
+            //self.fetch()
         } catch {
-            fatalError("Failed to fetched Allcards: \(error)")
+            fatalError("Failure to save context: \(error)")
         }
         
     }
+
+    // Mark - Fetch All cards
+    
+    func fetch() {
+        let moc = self.coreDataStack.persistentContainer.viewContext
+        let personFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "AllCards")
+        
+        do {
+            let fetchedPerson = try moc.fetch(personFetch) as! [AllCards]
+            //print("name..",fetchedPerson.first?.name)
+            for cards in fetchedPerson {
+                print("elements..", cards.name)
+            }
+        } catch {
+            fatalError("Failed to fetch person: \(error)")
+        }
+    }
+    
+    
 }
 
